@@ -1,0 +1,128 @@
+#include<iostream>
+using namespace std;
+
+//有向边类
+class line {
+public:
+    int adjvex;//边连接的结点
+    line* nextline;//下一条边
+};
+
+//结点类
+class node {
+public:
+    //int data;//结点数据
+    line* firstline;//结点指向的第一条边
+};
+
+//图
+class Graph {
+public:
+    int vexnum, arcnum;
+    int* in_index;
+    int* out_index;
+    node* nodes;
+
+    Graph(int vex, int arc);
+    ~Graph();
+    void in_line(int x, int y);//输入有向边x->y
+    void top();//拓扑排序
+    void remove(int x);//去掉x结点的所有(出）边
+};
+
+Graph::Graph(int vex, int arc) {
+    vexnum = vex;
+    arcnum = arc;
+    nodes = new node[vex];
+    in_index = new int[vex];
+    out_index = new int[vex];
+    for (int i = 0; i < vex; i++) {
+        nodes[i].firstline = nullptr;
+    }
+
+    for (int i = 0; i < vex; i++) {
+        in_index[i] = 0;
+        out_index[i] = 0;
+    }
+}
+
+Graph::~Graph() {
+    delete[] nodes;
+    //在释放内存后将指针设置为nullptr。确保在后续代码中无法使用已经释放的指针。
+    nodes = nullptr;
+    delete[] in_index;
+    in_index = nullptr;
+    delete[] out_index;
+    out_index = nullptr;
+}
+
+void Graph::in_line(int x, int y) {
+    if (nodes[x].firstline == nullptr) {
+        line* line1 = new line;
+        line1->adjvex = y;
+        line1->nextline = nullptr;
+        nodes[x].firstline = line1;
+    }
+
+    else if (nodes[x].firstline != nullptr) {
+        line* line2 = nodes[x].firstline;
+        while (line2->nextline) {
+            line2 = line2->nextline;
+        }
+        line* line1 = new line;
+        line1->adjvex = y;
+        line1->nextline = nullptr;
+        line2->nextline = line1;
+    }
+    in_index[y] += 1;
+    out_index[x] += 1;
+}
+
+void Graph::remove(int x) {
+    if (in_index[x] != 0) {
+        cout << "Error：x结点有入度" << endl;
+        return;
+    }
+
+    line* line1 = nodes[x].firstline;
+
+    if (line1 != nullptr) {
+        int v = line1->adjvex;
+        in_index[v] -= 1;
+        line1 = line1->nextline;
+        for (; line1; line1 = line1->nextline) {
+            in_index[line1->adjvex] -= 1;
+        }
+    }
+}
+
+void Graph::top() {
+    cout << "拓扑排序为：" << endl;
+    for (int i = 0; i < vexnum; ) {
+
+        for (int j = 0; j < vexnum; j++) {
+            if (in_index[j] == 0) {
+                cout << j << " ";
+                remove(j);
+                in_index[j] = -1;
+                i++;
+            }
+        }
+    }
+}
+
+int main() {
+    int _vex, _arc;
+    cin >> _vex >> _arc;
+    Graph g(_vex, _arc);
+
+    for (int i = 0; i < g.arcnum; i++) {
+        int x, y;
+        cin >> x >> y;
+        g.in_line(x, y);
+    }
+
+    g.top();
+
+    return 0;
+}
