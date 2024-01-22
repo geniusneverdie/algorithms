@@ -1,0 +1,4 @@
+﻿  2111033_H6_Q2.cpp
+D:\daerxia\suanfa\2111033r6\2111033_H6_Q2\2111033_H6_Q2.cpp(91,9): warning C4101: “j”: 未引用的局部变量
+D:\daerxia\suanfa\2111033r6\2111033_H6_Q2\2111033_H6_Q2.cpp(91,6): warning C4101: “i”: 未引用的局部变量
+  2111033_H6_Q2.vcxproj -> D:\daerxia\suanfa\2111033r6\2111033_H6_Q2\x64\Debug\2111033_H6_Q2.exe
