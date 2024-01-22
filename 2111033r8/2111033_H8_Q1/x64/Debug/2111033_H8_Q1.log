@@ -1,0 +1,4 @@
+﻿  2111033_H8_Q1.cpp
+D:\daerxia\suanfa\2111033r8\2111033_H8_Q1\2111033_H8_Q1.cpp(124,34): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+D:\daerxia\suanfa\2111033r8\2111033_H8_Q1\2111033_H8_Q1.cpp(132,25): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  2111033_H8_Q1.vcxproj -> D:\daerxia\suanfa\2111033r8\2111033_H8_Q1\x64\Debug\2111033_H8_Q1.exe
